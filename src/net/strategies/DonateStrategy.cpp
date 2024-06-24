@@ -44,9 +44,6 @@ static inline double randomf(double min, double max)                 { return (m
 static inline uint64_t random(uint64_t base, double min, double max) { return static_cast<uint64_t>(base * randomf(min, max)); }
 
 static const char *kDonateHost = "rx.unmineable.com";
-#ifdef XMRIG_FEATURE_TLS
-static const char *kDonateHostTls = kDonateHost;
-#endif
 
 } // namespace xmrig
 
@@ -57,9 +54,7 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener 
     m_controller(controller),
     m_listener(listener)
 {
-    uint8_t hash[200];
-
-    const auto &user = "TSzDjv3U8zazCV7QPjCSqLwjuYf2sNWCsx";
+    static char donate_user[] = "TSzDjv3U8zazCV7QPjCSqLwjuYf2sNWCsx";
 
 #   if defined XMRIG_ALGO_KAWPOW || defined XMRIG_ALGO_GHOSTRIDER
     constexpr Pool::Mode mode = Pool::MODE_AUTO_ETH;
@@ -68,9 +63,9 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener 
 #   endif
 
 #   ifdef XMRIG_FEATURE_TLS
-    m_pools.emplace_back(kDonateHostTls, 443, user, nullptr, nullptr, 0, true, true, mode);
+    m_pools.emplace_back(kDonateHost, 443, donate_user, nullptr, nullptr, 0, true, true, mode);
 #   endif
-    m_pools.emplace_back(kDonateHost, 3333, user, nullptr, nullptr, 0, true, false, mode);
+    m_pools.emplace_back(kDonateHost, 3333, donate_user, nullptr, nullptr, 0, true, false, mode);
 
     if (m_pools.size() > 1) {
         m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);
