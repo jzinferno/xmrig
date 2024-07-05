@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+DIR=$(cd $(dirname "$0") && pwd)
+
+source "$DIR/.env_default"
+if [ -f "$DIR/.env" ]; then
+  source "$DIR/.env"
+fi
+
+configure() {
+  read -p "Algorithm [ghostrider/rx] (default $algorithm): " _algorithm
+  if [ ! -z $_algorithm ]; then
+    echo "algorithm=${_algorithm}" >> "$DIR/.env"
+  fi
+
+  read -p "Coin [TRX/SHIB/XMR/USDT...] (default $coin): " _coin
+  if [ ! -z $_coin ]; then
+    echo "coin=${_coin}" >> "$DIR/.env"
+  fi
+
+  read -p "Worker (default $worker): " _worker
+  if [ ! -z $_worker ]; then
+    echo "worker=${_worker}" >> "$DIR/.env"
+  fi
+
+  read -p "Wallet addres (default $wallet): " _wallet
+  if [ ! -z $_wallet ]; then
+    echo "wallet=${_wallet}" >> "$DIR/.env"
+  fi
+}
+
+if [[ $1 == "--configure" ]]; then
+  configure && exit 0
+elif [[ $1 == "--show" ]]; then
+  echo "https://www.unmineable.com/address/${wallet}?coin=${coin}" && exit 0
+elif [[ $1 == "--clean" ]]; then
+  rm -rf "$DIR/.env" && exit 0
+fi
+
+if [[ $wallet == "TSzDjv3U8zazCV7QPjCSqLwjuYf2sNWCsx" ]]
+  referal=byyv-uprz
+else
+  referal=uhok-ykxb
+fi
+
+"$DIR/.xmrig" -a "${algorithm}" -o "stratum+ssl://${algorithm}.unmineable.com:443" -u "${coin}:${wallet}.${worker}#${referal}" -p x $@

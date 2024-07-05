@@ -41,11 +41,11 @@ for arch in ${archs[@]}; do
   esac
 
   cd "$DIR/libuv/build" && mkdir -p "$DIR/install/libuv/$ANDROID_ABI"
-  cmake .. -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" -DANDROID_ABI=$ANDROID_ABI -DANDROID_PLATFORM=android-24 -DCMAKE_INSTALL_PREFIX="$DIR/install/libuv/$ANDROID_ABI" -DBUILD_SHARED_LIBS=OFF
+  cmake .. -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" -DANDROID_ABI=$ANDROID_ABI -DANDROID_PLATFORM=android-24 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="$DIR/install/libuv/$ANDROID_ABI"
   make -j$(nproc --all) && make install && rm -rf *
 
   cd "$DIR/openssl/build" && mkdir -p "$DIR/install/openssl/$ANDROID_ABI"
-  ../Configure "$OPENSSL_FLAG" -D_ANDROID_API=24 --prefix="$DIR/install/openssl/$ANDROID_ABI" -no-shared -no-asm -no-zlib -no-comp -no-dgram -no-filenames -no-cms
+  ../Configure "$OPENSSL_FLAG" -D_ANDROID_API=24 -no-shared -no-asm -no-zlib -no-comp -no-dgram -no-filenames -no-cms --prefix="$DIR/install/openssl/$ANDROID_ABI"
   make -j$(nproc --all) && make install && rm -rf *
 
   mkdir -p "$DIR/build" "$DIR/install/xmrig/$ANDROID_ABI" && cd "$DIR/build"
@@ -63,7 +63,8 @@ for arch in ${archs[@]}; do
     -DOPENSSL_SSL_LIBRARY="$DIR/install/openssl/$ANDROID_ABI/lib/libssl.a" \
     -DOPENSSL_CRYPTO_LIBRARY="$DIR/install/openssl/$ANDROID_ABI/lib/libcrypto.a" \
     -DOPENSSL_INCLUDE_DIR="$DIR/install/openssl/$ANDROID_ABI/include"
-  make -j$(nproc --all) && mv xmrig "$DIR/install/xmrig/$ANDROID_ABI" && rm -rf *
+  make -j$(nproc --all) && mv xmrig "$DIR/install/xmrig/$ANDROID_ABI/.xmrig" && rm -rf *
+  cp ../../android/xmrig ../../android/.env_default "$DIR/install/xmrig/$ANDROID_ABI"
 
 done
 
