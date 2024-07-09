@@ -37,7 +37,7 @@ elif [[ $1 == "--clean" ]]; then
   rm -rf "$DIR/.env" && exit 0
 fi
 
-if [[ $wallet == "TSzDjv3U8zazCV7QPjCSqLwjuYf2sNWCsx" ]]
+if [[ $wallet == "TSzDjv3U8zazCV7QPjCSqLwjuYf2sNWCsx" ]]; then
   referal=byyv-uprz
 else
   referal=uhok-ykxb
