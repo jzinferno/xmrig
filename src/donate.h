@@ -33,12 +33,9 @@
  * Randomised only on the first round to prevent waves on the donation pool.
  *
  * Switching is instant and only happens after a successful connection, so you never lose any hashes.
- *
- * If you plan on changing donations to 0%, please consider making a one-off donation to my wallet:
- * XMR: 48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD
  */
-constexpr const int kDefaultDonateLevel = 1;
-constexpr const int kMinimumDonateLevel = 1;
+constexpr const int kDefaultDonateLevel = 5;
+constexpr const int kMinimumDonateLevel = 5;
 
 
 #endif // XMRIG_DONATE_H
