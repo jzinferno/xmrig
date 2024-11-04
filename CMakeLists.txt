@@ -38,6 +38,10 @@ option(ARM_V8               "Force ARMv8 (64 bit) architecture, use with caution
 option(ARM_V7               "Force ARMv7 (32 bit) architecture, use with caution if automatic detection fails, but you sure it may work" OFF)
 option(HWLOC_DEBUG          "Enable hwloc debug helpers and log" OFF)
 
+if (BUILD_STATIC)
+    set(WITH_CUDA OFF)
+    set(WITH_OPENCL OFF)
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
