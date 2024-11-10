@@ -84,6 +84,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES Clang)
         endif()
     endif()
 
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=lld")
     if (BUILD_STATIC)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
     endif()
